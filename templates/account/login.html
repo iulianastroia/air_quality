@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% extends "menu/menu.html" %}
+    <title>{% block title %}{{ _("Login") }}{% endblock %}</title>
+    {% block dependencies %}
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="static/vendor/jquery/jquery.min.js"></script>
+
+        {#        todo used for checkbox#}
+        <link rel="stylesheet" href="static/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+
+        <link rel="stylesheet" href="static/css/account_style.css">
+
+        <style>
+
+            #username, #password {
+                border-radius: 15px 50px 30px;
+                border: 2px solid #5e697b;
+                width: 100%;
+                padding: 10px;
+                text-align: center;
+            }
+            img {
+                border-radius: 15px 50px 30px;
+                height: 60%;
+            }
+
+            .container_menu {
+                height: 100px;
+                width: 90%;
+                margin: auto;
+                position: fixed;
+                background-color: transparent;
+                display: flow;
+                background: var(--color-secondary);
+                color: var(--font-color);
+            }
+
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <br><br>
+    <div class="container_menu">
+        <br><br>
+
+        <div class="menu">
+            <section class="sign-in">
+                <div class="signin-content">
+
+                    <div class="signin-image">
+                        <figure><img src="static/images/signin-image.png" alt="login image"></figure>
+                    </div>
+
+                    <div class="signin-form">
+                        <h3 style="text-align: center">{{ _("Login") }} </h3>
+                        <br>
+
+                        <form method="POST" class="register-form" id="login-form">
+                            <div class="form-group">
+                                <label for="username">
+                                </label>
+                                <input type="text" name="username" id="username" placeholder="{{ _("Username") }}"
+                                       autocomplete="off"
+                                       required
+                                       oninvalid="this.setCustomValidity('{{ _("Please enter your username.") }}')"
+                                       oninput="this.setCustomValidity('')"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">
+                                </label>
+                                <input type="password" name="password" id="password" placeholder="{{ _("Password") }}"
+                                       autocomplete="off"
+                                       required
+                                       oninvalid="this.setCustomValidity('{{ _("Please enter your password.") }}')"
+                                       oninput="this.setCustomValidity('')"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="showpass" id="showpass" onclick="show_password()"/>
+                                <label for="showpass"
+                                       class="label-agree-term"><span><span></span></span>{{ _("Show password") }}
+                                </label>
+                            </div>
+
+                            <b> <span id="message" style="color: #5e697b "> {{ message }} </span></b>
+                            <div class="form-group form-button">
+                                <input type="submit" name="login" id="login" class="btn btn-outline-secondary"
+                                       value="{{ _("Confirm") }}"/>
+                            </div>
+                            <a href="/register" class="signup-image-link">{{ _("Create an account") }}</a>
+
+
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+    <script>
+        function show_password() {
+            var pass = document.getElementById("password");
+            if (pass.type === "password") {
+                pass.type = "text";
+            } else {
+                pass.type = "password";
+            }
+        }
+
+
+    </script>
+{% endblock %}
+</body>
+</html>

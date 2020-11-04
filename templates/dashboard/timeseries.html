@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "menu/menu.html" %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ _("Timeseries") }}{% endblock %}</title>
+    {% block dependencies %}
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <link href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css"
+              rel="stylesheet"/>
+        <link href="https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css" rel="stylesheet"/>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="/static/styles/prediction_template.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.1/dygraph-combined.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+        <style>
+            {#loading#}
+            .loader {
+                border: 16px solid #000000;
+                margin: 0 auto;
+
+                border-radius: 50%;
+                border-top: 16px solid #08db64;
+                width: 50px;
+                height: 50px;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    {% endblock %}
+</head>
+
+<body>
+{% block content %}
+    <form method="post">
+
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">{{ _("Unit") }}</th>
+                <th scope="col">{{ _("Sensor") }}</th>
+                <th scope="col">{{ _("Start Date") }}</th>
+                <th scope="col">{{ _("End Date") }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><select id="units" disabled></select></td>
+                <td><select id="sensors" name="sensors"></select></td>
+
+                <td><input type="date" class="date" name="d1" id="d1" value=""/></td>
+                <td><input type="date" class="date" name="d3" id="d3" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ _("Status") }}</td>
+                <td><span style="font-weight: bold" id="status">Idle</span></td>
+                <td>
+                    <input type="checkbox" name="checkbox" id="checkbox"
+                    >{{ _(" Show boxplot") }} </span>
+
+
+                    <dl id="diff"></dl>
+                </td>
+                <td><b><span name="error" id="error" disabled="disabled" style="color:#ff3b20"/>{{ error }} </b>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td><input type="checkbox" name="download_checkbox" id="download_checkbox"
+                >{{ _(" Download selected data") }}
+                </td>
+                <td></td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div class="block">
+            <input type="date" class="date" name="date" id="d2" value="" disabled hidden/>
+            {#            <input type="date" class="date" name="d2" id="d2" value=""/>#}
+        </div>
+        <br>
+        <div class="block">
+            <input type="text" name="sensor_data" id="sensor_data" hidden/>
+        </div>
+
+        <div class="form-group" align="center">
+            <input type="submit" id="visualize_btn" name="visualize_btn"
+                   class="btn btn-outline-secondary"
+                   value="{{ _("Visualize Data") }}"/>
+        </div>
+
+        <div class="loader" id="loader" style="display: none "></div>
+
+    </form>
+    <div id="sensor_plot">
+        <script>
+            var graphs = {{sensor_plot_py | safe}};
+            Plotly.plot('sensor_plot', graphs, {});
+        </script>
+    </div>
+
+{#    #}
+        <div id="correlation_mat">
+        <script>
+            var graphs = {{correlation_mat | safe}};
+            Plotly.plot('correlation_mat', graphs, {});
+        </script>
+    </div>
+{#    #}
+    <div id="boxplot">
+        <script>
+            var graphs = {{boxplot_py | safe}};
+            Plotly.plot('boxplot', graphs, {});
+        </script>
+    </div>
+    <script>
+
+
+        function append(dl, dtTxt, ddTxt) {
+            var dt = document.createElement("dt");
+            var dd = document.createElement("dd");
+            dt.textContent = dtTxt;
+            dd.textContent = ddTxt;
+            dl.appendChild(dt);
+            dl.appendChild(dd);
+        }
+
+        var sec_from_start;
+        var sec_from_end;
+
+        $(document).ready(function () {
+
+            var today = new Date();
+
+
+            $('#d1').val("{{ start_year }}-{{ start_month }}-{{ start_day }}");
+            $('#d3').val("{{ end_year }}-{{ end_month }}-{{ end_day }}");
+            $('#d2').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate())).slice(-2));
+
+
+            $('#d1, #d2,#d3').on('change', function (ev) {
+                var dl = document.getElementById("diff");
+                while (dl.hasChildNodes()) {
+                    dl.removeChild(dl.lastChild);
+                }
+
+                var date1 = new Date($('#d1').val());
+                var date2 = new Date($('#d2').val());
+                var date3 = new Date($('#d3').val());
+                sec_from_start = (date2 - date1) / 1000;
+                sec_from_end = (date2 - date3) / 1000;
+
+
+            });
+
+            // trigger change
+            $('#d1').change();
+        });
+
+
+        // CONFIGURE HERE
+        // Open the dashboard, www.uradmonitor.com/dashboard , to retrieve your user id and key
+        var userid = "6024"; // set a valid user id uradmonitor api
+        var userkey = "09d5eb9a4e4576e4f197b71c57eede43";
+
+
+        // HELPER FUNCTIONS FOR URADMONITOR API
+        function getUnit(sensor) {
+            switch (sensor) {
+                case "temperature":
+                    return "°C";
+                case "cpm":
+                    return "CPM";
+                case "voltage":
+                    return "Volts";
+                case "duty":
+                    return "‰";
+                case "pressure":
+                    return "Pa";
+                case "humidity":
+                    return "% RH";
+                case "gas1":
+                    return "ppm";
+                case "gas2":
+                    return "ppm";
+                case "gas3":
+                    return "ppm";
+                case "gas4":
+                    return "ppm";
+                case "dust":
+                    return "mg/m³";
+                case "co2" :
+                    return "ppm";
+                case "ch2o" :
+                    return "ppm";
+                case "pm25" :
+                    return "µg/m³";
+                case "pm10" :
+                    return "µg/m³";
+                case "noise" :
+                    return "dBA";
+                case "voc" :
+                    return "voc";
+            }
+        }
+
+        function downloadUnits(u) {
+            document.getElementById("status").style.color = "magenta";
+            document.getElementById("status").textContent = "{{ _("loading") }}";
+
+            $.ajax({
+                type: 'GET',
+                url: "https://data.uradmonitor.com/api/v1/devices/userid/" + u,
+                dataType: 'json',
+                success: function (data) {
+                    // status
+                    if (Object.keys(data)[0] == 'error')
+                        $("#status").html(data['error']).css('color', 'red');
+                    else {
+                        document.getElementById("status").style.color = "green";
+                        document.getElementById("status").textContent = "{{ _("Units ok") }}";
+
+                    }
+                    $('#units').append($("<option />").val("82000167").text("Brasov"));
+                    //		});
+                    // first trigger
+                    if (data.length > 0)
+                        $('#units').trigger('change');
+                },
+                async: true
+            });
+        }
+
+
+        // populate sensors
+        function downloadCapabilities(id, u, k) {
+            document.getElementById("status").style.color = "magenta";
+            document.getElementById("status").textContent = "{{ _("loading") }}";
+            $.ajax({
+                type: 'GET',
+                url: "https://data.uradmonitor.com/api/v1/devices/" + id,
+                dataType: 'json',
+                headers: {'Content-Type': 'text/plain', 'X-User-id': u, 'X-User-hash': k},
+                success: function (data) {
+                    // status
+                    if (Object.keys(data)[0] == 'error')
+                        $("#status").html(data['error']).css('color', 'red');
+                    else {
+                        document.getElementById("status").style.color = "green";
+                        document.getElementById("status").textContent = "{{ _("Connected to device.") }}";
+                    }
+                    {#$("#status").html('Connected to device.').css('color', 'green');#}
+                    // populate select
+                    $('#sensors').append($("<option />").val("").text("{{ _("Choose a sensor from the list") }}").hide());
+
+                    $('#sensors').append($("<option />").val("timelocal").text("{{ _("Timelocal") }}"));
+                    $('#sensors').append($("<option />").val("temperature").text("{{ _("Temperature") }}"));
+
+                    $('#sensors').append($("<option />").val("pressure").text("{{ _("Pressure") }}"));
+                    $('#sensors').append($("<option />").val("humidity").text("{{ _("Humidity") }}"));
+                    $('#sensors').append($("<option />").val("voc").text("{{ _("Volatile organic compound(VOC)") }}"));
+                    $('#sensors').append($("<option />").val("noise").text("{{ _("Noise") }}"));
+                    $('#sensors').append($("<option />").val("co2").text("{{ _("Carbon Dioxide") }}"));
+                    $('#sensors').append($("<option />").val("ch2o").text("{{ _("Formaldehyde") }}"));
+                    $('#sensors').append($("<option />").val("o3").text("{{ _("Ozone") }}"));
+                    $('#sensors').append($("<option />").val("pm1").text("PM1.0"));
+                    $('#sensors').append($("<option />").val("pm25").text("PM2.5"));
+                    $('#sensors').append($("<option />").val("pm10").text("PM10"));
+                    $('#sensors').append($("<option />").val("all").text("{{ _("All") }}"));
+
+                    // first trigger
+                    if (data.length > 0)
+                        $('#sensors').trigger('change');
+                }
+
+                ,
+                async: true
+            })
+            ;
+        }
+
+        function downloadData(start_time, end_time, id, sensor, u, k) {
+            document.getElementById("status").style.color = "magenta";
+            document.getElementById("status").textContent = "{{ _("loading") }}";
+            $.ajax({
+                type: 'GET',
+                url: "https://data.uradmonitor.com/api/v1/devices/" + id + "/" + sensor + "/" + start_time + "/" + end_time,
+                dataType: 'json',
+                headers: {'Content-Type': 'text/plain', 'X-User-id': u, 'X-User-hash': k},
+                success: function (data, status) {
+                    if (status != 'success') {
+                        $("#status").html('error').css('color', 'red');
+                    } else {
+                        if (Object.keys(data)[0] == 'error')
+                            $("#status").html(data['error']).css('color', 'red');
+                        else {
+                            var stringified = JSON.stringify(data);
+                            {#$("#status").html('ok ' + (data.length ? (data.length + ' {{ _("row(s)") }} ') : ' ') + (stringified.length / 1000) + ' KB').css('color', 'green');#}
+                            document.getElementById("status").textContent = "{{ _("Data was downloaded") }}";
+
+
+                            $("#visualize_btn").click(function () {
+                                    document.getElementById("loader").style.display = "block";
+                                    download_csv(data, sensor);
+
+                                }
+                            );
+
+                            console.log("data");
+                        }
+                    }
+                },
+                async: true
+            });
+        }
+
+
+        function download_csv(data, sensor) {
+            let checkBox = document.getElementById("download_checkbox");
+            let csvHeader = Object.keys(data[0]).join(',') + '\n'; // header row
+            let csvBody = data.map(row => Object.values(row).join(',')).join('\n');
+            let hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvHeader + csvBody);
+            hiddenElement.target = '_blank';
+
+            if (checkBox.checked === true) {
+                hiddenElement.download = sensor + '.csv';
+                hiddenElement.click()
+            }
+
+            let csv_file = encodeURI(csvHeader + csvBody);
+            $('#sensor_data').val(csv_file);
+        }
+
+
+        // START EXECUTION
+        if (typeof userid == 'undefined' || typeof userkey == 'undefined')
+            $("#status").html('Configure variables userid and userkey in the code, using your credentials, as presented in the dashboard').css('color', 'red');
+        else {
+            downloadUnits(userid);
+        }
+        var units;
+        $('#units').on('change', function () {
+            $('#sensors').empty();
+            downloadCapabilities("82000167", userid, userkey);
+
+        });
+
+        $('#sensors').on('change', function () {
+            downloadData(sec_from_start, sec_from_end, $("#units").val(), $("#sensors").val(), userid, userkey);
+        });
+
+
+        var chart = new Dygraph(
+            'graphdiv', [], {
+                axisLabelColor: '#555',
+                legend: 'always',
+                labelsDivStyles: {'textAlign': 'right'},
+                connectSeparatedPoints: true,
+                colors: [],
+                labels: []
+            }
+        );
+
+    </script>
+
+{% endblock %}
+
+</body>
+</html>

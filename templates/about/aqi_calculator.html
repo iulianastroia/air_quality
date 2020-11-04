@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "menu/menu.html" %}
+<head>
+
+    <meta charset="utf-8">
+
+    <title>{% block title %}{{ _("AQI Calculator") }}{% endblock %}</title>
+    {% block dependencies %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+        <style>
+
+            {#top right position of text#}
+                 .topcenter {
+                {#background-color: #0074D9;#}
+                padding: 10px;
+                {#text-align: center;#}
+                top: 0;
+                position: absolute;
+                left: 42%;
+                 }
+
+
+        </style>
+
+    {% endblock %}
+
+</head>
+<body>
+{% block content %}
+    <div class="topcenter">
+    <a href="/parameters">{{ _("For more details, click here") }}</a></div>
+
+    <table class="table table-striped table-dark">
+        <thead>
+
+        <tr>
+            <th scope="col">{{ _("Sensor") }}</th>
+            <th scope="col">{{ _("Unit") }}</th>
+            <th scope="col">{{ _("Concentration") }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+
+                <select onchange="select_pollutant(this)" size="1" style="width: 252px" id="select_pollutant_id"
+                        name="select_pollutant_id">
+                    <option value="0" selected="selected" disabled="disabled">{{ _("Select") }}</option>
+                    <option value="1">{{ _("O3(1h average)") }}</option>
+                    <option value="2">{{ _("PM2.5(24h average)") }}</option>
+                    <option value="3">{{ _("PM10(24h average)") }}</option>
+                    <option value="4">{{ _("NO2(1h average)") }}</option>
+                    <option value="5">{{ _("SO2(1h average)") }}</option>
+                    <option value="6">{{ _("O3(8h average)") }}</option>
+                </select>
+            </td>
+            <td>
+                <input type="text" id="unit_id" size="29px" disabled="disabled" placeholder="Unit">
+            </td>
+            <td><input id="concentration_id" size="29px" name="concentration_id" placeholder="%"/></td>
+        </tr>
+        <tr>
+            <td>{{ _("Air Quality Index") }}</td>
+            <td>{{ _("Air Quality Category") }}</td>
+        </tr>
+        <tr>
+
+            <td><input name="aqi" size="29px" id="aqi" placeholder="{{ _("aqi") }}" disabled="disabled"/></td>
+            <td><input type="text" size="29px" name="aqi_category" id="aqi_category" disabled="disabled"
+                       placeholder="{{ _("aqi category") }}"/></td>
+            <td><b><span name="error" id="error" disabled="disabled" style="color:#ff3b20"/></b></td>
+
+            <td></td>
+        </tr>
+
+        </tbody>
+    </table>
+    <div class="form-group" align="center">
+        <input type="submit" id="select_btn" name="select_btn"
+               class="btn btn-outline-secondary" onclick="calculate_aqi()"
+               value="{{ _("Calculate Air Quality Index") }}"/>
+    </div>
+
+{#    <div class="topcenter"><a href="/parameters">{{ _("For more details, click here") }}</a></div>#}
+    <table style="padding:5px">
+        <tr>
+            <td></td>
+        </tr>
+
+    </table><br>
+    <div id='indicator' align="center"><!-- Plotly chart will be drawn inside this DIV --></div>
+    <script>
+
+        function select_pollutant(sel) {
+            var sel_index = sel.selectedIndex;
+            var sel_text = sel.options[sel.selectedIndex].text;
+            switch (sel_index) {
+                case 1:
+                    document.getElementById("unit_id").value = "ppb";
+                    break;
+                case 2:
+                    document.getElementById("unit_id").value = "ug/m3";
+                    break;
+                case 3:
+                    document.getElementById("unit_id").value = "ug/m3";
+                    break;
+                case 4:
+                    document.getElementById("unit_id").value = "ppb";
+                    break;
+                case 5:
+                    document.getElementById("unit_id").value = "ppb";
+                    break;
+                case 6:
+                    document.getElementById("unit_id").value = "ppb";
+                    break;
+                default:
+                    document.getElementById("unit_id").value = "Unit";
+                    break;
+            }
+        }
+
+
+        function calculate_aqi() {
+            var concentration = document.getElementById("concentration_id").value;
+            var pollutant = document.getElementById("select_pollutant_id").value;
+
+            var pollutant_name;
+
+
+            switch (parseInt(pollutant)) {
+                case 1:
+                    pollutant_name = "o3";
+                {#document.getElementById("aqi").value = 'o3';#}
+                    break;
+                case 2:
+                    pollutant_name = "pm25";
+                    break;
+                case 3:
+                    pollutant_name = "pm10";
+                    break;
+                case 4:
+                    pollutant_name = "no2";
+                    break;
+                case 5:
+                    pollutant_name = "so2";
+                    break;
+                case 6:
+                    pollutant_name = "o3_8h";
+                    break;
+                default:
+                    pollutant_name = "";
+                    break;
+            }
+            if (document.getElementById("concentration_id").value !== "") {
+                change_aqi(pollutant_name, concentration);
+            } else {
+                set_error("{{ _("Please enter a valid concentration.") }}");
+                document.getElementById("aqi_category").style.backgroundColor = "#ffffff";
+                document.getElementById("aqi_category").value = "";
+                document.getElementById("aqi").value = "";
+            }
+        }
+
+        function set_error(error_text) {
+            document.getElementById("error").textContent = error_text;
+        }
+
+        function change_aqi(pol, pollutant_concentration) {
+            var result;
+            var c_low, c_high, i_low, i_high;
+            var i;
+            switch (pol) {
+                case "o3":
+                    if (125 <= pollutant_concentration && pollutant_concentration <= 164) {
+                        c_low = 125;
+                        c_high = 164;
+                        i_low = 101;
+                        i_high = 150;
+                        set_error("");
+
+                    } else if (165 <= pollutant_concentration && pollutant_concentration <= 204) {
+                        c_low = 165;
+                        c_high = 204;
+                        i_low = 151;
+                        i_high = 200;
+                        set_error("");
+
+                    } else if (205 <= pollutant_concentration && pollutant_concentration <= 404) {
+                        c_low = 205;
+                        c_high = 404;
+                        i_low = 201;
+                        i_high = 300;
+                        set_error("");
+
+                    } else if (405 <= pollutant_concentration && pollutant_concentration <= 504) {
+                        c_low = 405;
+                        c_high = 504;
+                        i_low = 301;
+                        i_high = 400;
+                        set_error("");
+
+                    } else if (505 <= pollutant_concentration && pollutant_concentration <= 604) {
+                        c_low = 505;
+                        c_high = 604;
+                        i_low = 301;
+                        i_high = 400;
+                        set_error("");
+
+                    } else {
+                        set_error("{{ _( "Ozone values must be between 125 and 604. Please enter a valid value.") }}");
+                    }
+
+                    break;
+                case "pm25":
+
+                    if (0 <= pollutant_concentration && pollutant_concentration <= 12) {
+                        c_low = 0;
+                        c_high = 12;
+                        i_low = 0;
+                        i_high = 50;
+                        set_error("");
+
+                    } else if (12.1 <= pollutant_concentration && pollutant_concentration <= 35.4) {
+                        c_low = 12.1;
+                        c_high = 35.4;
+                        i_low = 51;
+                        i_high = 100;
+                        set_error("");
+
+
+                    } else if (35.5 <= pollutant_concentration && pollutant_concentration <= 55.4) {
+                        c_low = 35.5;
+                        c_high = 55.4;
+                        i_low = 101;
+                        i_high = 150;
+                        set_error("");
+
+                    } else if (55.5 <= pollutant_concentration && pollutant_concentration <= 150.4) {
+                        c_low = 55.5;
+                        c_high = 150.4;
+                        i_low = 151;
+                        i_high = 200;
+                        set_error("");
+
+
+                    } else if (150.5 <= pollutant_concentration && pollutant_concentration <= 250.4) {
+                        c_low = 150.5;
+                        c_high = 250.4;
+                        i_low = 201;
+                        i_high = 300;
+                        set_error("");
+
+
+                    } else if (250.5 <= pollutant_concentration && pollutant_concentration <= 350.4) {
+                        c_low = 250.5;
+                        c_high = 350.4;
+                        i_low = 301;
+                        i_high = 400;
+                        set_error("");
+
+                    } else if (350.5 <= pollutant_concentration && pollutant_concentration <= 500.4) {
+                        c_low = 350.5;
+                        c_high = 500.4;
+                        i_low = 301;
+                        i_high = 400;
+                        set_error("");
+
+                    } else {
+                        set_error("{{ _( "PM2.5 values must be between 0 and 500.4. Please enter a valid value.") }}");
+                    }
+                    break;
+
+                case
+                "pm10":
+                    if (0 <= pollutant_concentration && pollutant_concentration <= 54) {
+                        c_low = 0;
+                        c_high = 54;
+                        i_low = 0;
+                        i_high = 50;
+                        set_error("");
+
+                    } else if (55 <= pollutant_concentration && pollutant_concentration <= 154) {
+                        c_low = 55;
+                        c_high = 154;
+                        i_low = 51;
+                        i_high = 100;
+                        set_error("");
+
+
+                    } else if (155 <= pollutant_concentration && pollutant_concentration <= 254) {
+                        c_low = 155;
+                        c_high = 254;
+                        i_low = 101;
+                        i_high = 150;
+                        set_error("");
+
+
+                    } else if (255 <= pollutant_concentration && pollutant_concentration <= 354) {
+                        c_low = 255;
+                        c_high = 354;
+                        i_low = 151;
+                        i_high = 200;
+                        set_error("");
+
+                    } else if (355 <= pollutant_concentration && pollutant_concentration <= 424) {
+                        c_low = 355;
+                        c_high = 424;
+                        i_low = 201;
+                        i_high = 300;
+                        set_error("");
+
+
+                    } else if (425 <= pollutant_concentration && pollutant_concentration <= 504) {
+                        c_low = 425;
+                        c_high = 504;
+                        i_low = 301;
+                        i_high = 400;
+                        set_error("");
+
+                    } else if (505 <= pollutant_concentration && pollutant_concentration <= 604) {
+                        c_low = 505;
+                        c_high = 604;
+                        i_low = 401;
+                        i_high = 500;
+                        set_error("");
+
+                    } else {
+                        set_error("{{ _( "PM10 values must be between 0 and 604. Please enter a valid value.") }}");
+                    }
+                    break;
+
+                case "no2":
+                    if (0 <= pollutant_concentration && pollutant_concentration <= 53) {
+                        c_low = 0;
+                        c_high = 53;
+                        i_low = 0;
+                        i_high = 50;
+                        set_error("");
+
+                    } else if (54 <= pollutant_concentration && pollutant_concentration <= 100) {
+                        c_low = 54;
+                        c_high = 100;
+                        i_low = 51;
+                        i_high = 100;
+                        set_error("");
+
+
+                    } else if (101 <= pollutant_concentration && pollutant_concentration <= 360) {
+                        c_low = 101;
+                        c_high = 360;
+                        i_low = 101;
+                        i_high = 150;
+                        set_error("");
+
+
+                    } else if (361 <= pollutant_concentration && pollutant_concentration <= 649) {
+                        c_low = 361;
+                        c_high = 649;
+                        i_low = 151;
+                        i_high = 200;
+                        set_error("");
+
+                    } else if (650 <= pollutant_concentration && pollutant_concentration <= 1249) {
+                        c_low = 650;
+                        c_high = 1249;
+                        i_low = 201;
+                        i_high = 300;
+                        set_error("");
+
+
+                    } else if (1250 <= pollutant_concentration && pollutant_concentration <= 1649) {
+                        c_low = 1250;
+                        c_high = 1649;
+                        i_low = 301;
+                        i_high = 400;
+                        set_error("");
+
+                    } else if (1650 <= pollutant_concentration && pollutant_concentration <= 2049) {
+                        c_low = 1650;
+                        c_high = 2049;
+                        i_low = 401;
+                        i_high = 500;
+                        set_error("");
+
+                    } else {
+                        set_error("{{ _( "NO2 values must be between 0 and 2049. Please enter a valid value.") }}");
+                    }
+                    break;
+
+                case "so2":
+
+                {#alert("so2");#}
+                    if (0 <= pollutant_concentration && pollutant_concentration <= 35) {
+                        c_low = 0;
+                        c_high = 35;
+                        i_low = 0;
+                        i_high = 50;
+                        set_error("");
+
+                    } else if (36 <= pollutant_concentration && pollutant_concentration <= 75) {
+                        c_low = 36;
+                        c_high = 75;
+                        i_low = 51;
+                        i_high = 100;
+                        set_error("");
+
+
+                    } else if (76 <= pollutant_concentration && pollutant_concentration <= 185) {
+                        c_low = 76;
+                        c_high = 185;
+                        i_low = 101;
+                        i_high = 150;
+                        set_error("");
+
+
+                    } else if (186 <= pollutant_concentration && pollutant_concentration <= 304) {
+                        c_low = 186;
+                        c_high = 304;
+                        i_low = 151;
+                        i_high = 200;
+                        set_error("");
+
+                    } else if (305 <= pollutant_concentration && pollutant_concentration <= 604) {
+                        c_low = 305;
+                        c_high = 604;
+                        i_low = 201;
+                        i_high = 300;
+                        set_error("");
+
+
+                    } else if (605 <= pollutant_concentration && pollutant_concentration <= 804) {
+                        c_low = 605;
+                        c_high = 804;
+                        i_low = 301;
+                        i_high = 400;
+                        set_error("");
+
+                    } else if (805 <= pollutant_concentration && pollutant_concentration <= 1004) {
+                        c_low = 805;
+                        c_high = 1004;
+                        i_low = 401;
+                        i_high = 500;
+                        set_error("");
+
+                    } else {
+                        set_error("{{ _( "SO2 values must be between 0 and 1004. Please enter a valid value.") }}");
+                    }
+                    break;
+
+
+                case "o3_8h":
+                    if (0 <= pollutant_concentration && pollutant_concentration <= 54) {
+                        c_low = 0;
+                        c_high = 54;
+                        i_low = 0;
+                        i_high = 50;
+                        set_error("");
+
+                    } else if (55 <= pollutant_concentration && pollutant_concentration <= 70) {
+                        c_low = 55;
+                        c_high = 70;
+                        i_low = 51;
+                        i_high = 100;
+                        set_error("");
+
+                    } else if (71 <= pollutant_concentration && pollutant_concentration <= 85) {
+                        c_low = 71;
+                        c_high = 85;
+                        i_low = 101;
+                        i_high = 150;
+                        set_error("");
+
+                    } else if (86 <= pollutant_concentration && pollutant_concentration <= 105) {
+                        c_low = 86;
+                        c_high = 105;
+                        i_low = 151;
+                        i_high = 200;
+                        set_error("");
+
+                    } else if (106 <= pollutant_concentration && pollutant_concentration <= 200) {
+                        c_low = 106;
+                        c_high = 200;
+                        i_low = 201;
+                        i_high = 300;
+                        set_error("");
+
+                    } else {
+                        set_error("{{ _( "Ozone values must be between 106 and 200. Please enter a valid value") }}");
+                    }
+
+                    break;
+                default:
+                    set_error("{{ _( "Please select a sensor from the list.") }}");
+                    break;
+            }
+
+            i = (i_high - i_low) / (c_high - c_low) * (pollutant_concentration - c_low) + i_low;
+            result = Math.round(i);
+            if (isNaN(result)) {
+                document.getElementById("aqi").value = "";
+
+            } else {
+                document.getElementById("aqi").value = result;
+            }
+
+            show_aqi_category(result);
+        }
+
+        function show_aqi_category(result) {
+            document.getElementById("aqi_category").style.color = "#ffffff";
+            if (document.getElementById("concentration_id").value !== "") {
+                if (0 <= result && result <= 50) {
+                    document.getElementById("aqi_category").style.backgroundColor = "#10c457";
+                    document.getElementById("aqi_category").value = "{{ _("Good") }}";
+                } else if (51 <= result && result <= 100) {
+
+                    document.getElementById("aqi_category").style.backgroundColor = "#aba300";
+                    document.getElementById("aqi_category").value = "{{_("Moderate")}}";
+
+
+                } else if (101 <= result && result <= 150) {
+                    document.getElementById("aqi_category").style.backgroundColor = "#ffa21c";
+                    document.getElementById("aqi_category").value = "{{_("Unhealthy for  Sensitive Groups")}}";
+
+                } else if (151 <= result && result <= 200) {
+                    document.getElementById("aqi_category").style.backgroundColor = "#ff3b20";
+                    document.getElementById("aqi_category").value = "{{ _("Unhealthy") }}";
+                } else if (201 <= result && result <= 300) {
+                    document.getElementById("aqi_category").style.backgroundColor = "#855a91";
+                    document.getElementById("aqi_category").value = "{{ _("Very Unhealthy") }}";
+                } else if (result >= 300) {
+
+                    document.getElementById("aqi_category").style.backgroundColor = "#913018";
+                    document.getElementById("aqi_category").value = "{{ _("Hazardous") }}";
+
+                } else {
+                    document.getElementById("aqi_category").style.backgroundColor = "#ffffff";
+                    document.getElementById("aqi_category").value = "";
+                }
+
+            } else {
+                document.getElementById("aqi_category").style.backgroundColor = "#ffffff";
+                document.getElementById("aqi_category").value = "";
+            }
+        }
+
+
+        $('#select_btn').on('click', function () {
+            if (document.getElementById("aqi").value !== "") {
+                let data = [
+                    {
+                        type: "indicator",
+                        value: document.getElementById("aqi").value,
+                        gauge: {
+                            axis: {visible: true, range: [0, 500]},
+                            bar: {color: document.getElementById("aqi_category").style.backgroundColor},
+                        },
+
+                        domain: {row: 0, column: 0}
+                    }
+
+
+                ];
+                let layout = {
+                    paper_bgcolor: "lavender",
+                    width: 450,
+                    height: 200,
+                    margin: {t: 25, b: 25, l: 25, r: 25},
+                    template: {
+                        data: {
+                            indicator: [
+                                {
+                                    title: "AQI",
+                                    mode: "number+gauge"
+                                }
+                            ]
+                        }
+                    }
+                };
+                document.getElementById("indicator").style.display = "block";
+                Plotly.newPlot('indicator', data, layout);
+            } else {
+                document.getElementById("indicator").style.display = "none";
+
+            }
+        })
+        ;
+
+
+    </script>
+
+{% endblock %}
+</body>
+</html>

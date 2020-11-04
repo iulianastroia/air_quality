@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+{% extends "menu/menu.html" %}
+<head>
+
+    <title>{% block title %}{{ _("Map") }}{% endblock %}</title>
+
+    <meta charset="utf-8"/>
+
+    {% block dependencies %}
+
+        <style>
+            html {
+                height: 100%{#height:40px;#}
+
+            }
+
+            body {
+                height: 100%;
+            {#height:40px;#} margin: 0;
+            }
+
+
+            #map {
+                height: calc(100vh - 50px);
+                z-index: 1;
+            }
+
+
+        </style>
+    {% endblock %}
+
+</head>
+<body>
+{% block content %}
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css"/>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
+
+
+
+    <div id='map' class="a"></div>
+
+    <script>
+        var mbUrl_aqi = 'https://tiles.aqicn.org/tiles/usepa-' + 'aqi' + '/{z}/{x}/{y}.png?token=7fc88131092887d986fef664ed800826c99c7434';
+        var mbUrl_pm25 = 'https://tiles.aqicn.org/tiles/usepa-' + 'pm25' + '/{z}/{x}/{y}.png?token=7fc88131092887d986fef664ed800826c99c7434';
+        var mbUrl_pm10 = 'https://tiles.aqicn.org/tiles/usepa-' + 'pm10' + '/{z}/{x}/{y}.png?token=7fc88131092887d986fef664ed800826c99c7434';
+        var mbUrl_o3 = 'https://tiles.aqicn.org/tiles/usepa-' + 'o3' + '/{z}/{x}/{y}.png?token=7fc88131092887d986fef664ed800826c99c7434';
+        var mbUrl_no2 = 'https://tiles.aqicn.org/tiles/usepa-' + 'no2' + '/{z}/{x}/{y}.png?token=7fc88131092887d986fef664ed800826c99c7434';
+        var mbUrl_so2 = 'https://tiles.aqicn.org/tiles/usepa-' + 'so2' + '/{z}/{x}/{y}.png?token=7fc88131092887d986fef664ed800826c99c7434';
+        var aqi = L.tileLayer(mbUrl_aqi);
+        var pm25 = L.tileLayer(mbUrl_pm25);
+        var pm10 = L.tileLayer(mbUrl_pm10);
+        var o3 = L.tileLayer(mbUrl_o3);
+        var no2 = L.tileLayer(mbUrl_no2);
+        var so2 = L.tileLayer(mbUrl_so2);
+        var map = L.map('map', {
+            center: [45.657974, 25.601198],
+            zoom: 11,
+            layers: [aqi]
+        });
+
+        var baseLayers = {
+            "aqi": aqi,
+            "pm25": pm25,
+            "pm10": pm10,
+            "no2": no2,
+            "so2": so2,
+            "o3": o3
+        };
+
+        {#    resize #}
+        document.getElementById("map").style.resize = "both";
+        var WAQI_ATTR = '&copy;  <a  href="http://waqi.info">waqi.info</a>';
+
+        var credits_url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var credits_attrib = '&copy;  <a  href="http://openstreetmap.org/copyright">OpenStreetMap</a>';
+        var osmLayer = L.tileLayer(credits_url, {attribution: [credits_attrib, WAQI_ATTR]});
+        map.addLayer(osmLayer);
+
+        L.control.layers(baseLayers, null, {collapsed: false}).addTo(map);
+
+    </script>
+{% endblock %}
+</body>
+</html>
+

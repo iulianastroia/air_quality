@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "menu/menu.html" %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ _("Parameters") }}{% endblock %}</title>
+{% block dependencies %}
+
+<style>
+
+.table {
+   margin: auto;
+   width: 78%;
+    z-index: 1;
+}
+</style>
+
+{% endblock %}
+</head>
+{% block content %}
+
+    <div class="container contact-form">
+    <div class="contact-image">
+        <img src="https://i.ibb.co/SNJpnHY/air-pollution-icon-png.png" alt="air_pollution_icon"/>
+    </div></div>
+
+
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">{{ _("Air Quality Index(AQI)") }}</th>
+            <th scope="col">{{ _("Air Pollution Level") }}</th>
+            <th scope="col">{{ _("Health Implications") }}</th>
+            <th scope="col">{{ _("Recommended Precautions") }}</th>
+            <th scope="col">{{ _("Color Symbol") }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td bgcolor="green"  style="color:black;">0-50
+            </td>
+            <td height="100" width="5" bgcolor="green"  style="color:black;">{{ _("Good") }}</td>
+            <td bgcolor="green"  style="color:black;">{{ _("Air quality is considered satisfactory, and air pollution poses little or no risk	") }}</td>
+            <td bgcolor="green"  style="color:black;">{{ _("None") }}</td>
+            <td bgcolor="green"  style="color:black;">{{ _("Green") }}</td>
+        </tr>
+        <tr>
+            <td bgcolor="#f6e700"  style="color:black;">51-100</td>
+            <td bgcolor="#f6e700"  style="color:black;">{{ _("Moderate	") }}</td>
+            <td bgcolor="#f6e700"  style="color:black;">{{ _("Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.") }}</td>
+            <td bgcolor="#f6e700"  style="color:black;">{{ _("Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.") }}</td>
+            <td bgcolor="#f6e700"  style="color:black;">{{ _("Yellow") }}</td>
+
+        </tr>
+        <tr>
+            <td bgcolor="#ffa21c" style="color:black;">101-150</td>
+            <td bgcolor="#ffa21c" style="color:black;">{{ _("Unhealthy for Sensitive Groups") }}</td>
+            <td bgcolor="#ffa21c" style="color:black;">{{ _("Members of sensitive groups may experience health effects. The general public is not likely to be affected.") }} </td>
+            <td bgcolor="#ffa21c"  style="color:black;" >{{ _("Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.") }}</td>
+            <td bgcolor="#ffa21c"  style="color:black;">{{ _("Orange") }}</td>
+
+        </tr>
+        <tr>
+            <td bgcolor="#ff3b20"  style="color:black;">151-200
+            </td>
+            <td bgcolor="#ff3b20"  style="color:black;">{{ _("Unhealthy") }}</td>
+            <td bgcolor="#ff3b20"  style="color:black;"  style="color:black;">{{ _("Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.") }} </td>
+            <td bgcolor="#ff3b20"  style="color:black;"  style="color:black;">{{ _("Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion.") }}</td>
+            <td bgcolor="#ff3b20"  style="color:black;"  style="color:black;">{{ _("Red") }}</td>
+
+        </tr>
+        <tr>
+            <td bgcolor="purple"  style="color:black;">201-300
+            </td>
+            <td bgcolor="purple"  style="color:black;">{{ _("Very Unhealthy") }}</td>
+            <td bgcolor="purple"  style="color:black;">{{ _("Health warnings of emergency conditions. The entire population is more likely to be affected.") }} </td>
+            <td bgcolor="purple"  style="color:black;">{{ _("Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.") }}</td>
+            <td bgcolor="purple"  style="color:black;">{{ _("Purple") }}</td>
+
+        </tr>
+        <tr>
+            <td bgcolor="maroon"  style="color:black;" >300+
+            </td>
+            <td bgcolor="maroon"  style="color:black;">{{ _("Hazardous") }}</td>
+            <td bgcolor="maroon"  style="color:black;">{{ _("Health alert: everyone may experience more serious health effects.") }} </td>
+            <td bgcolor="maroon"  style="color:black;">{{ _("Everyone should avoid all outdoor exertion.") }}</td>
+            <td bgcolor="maroon"  style="color:black;">{{ _("Maroon") }}</td>
+
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+</body>
+</html>

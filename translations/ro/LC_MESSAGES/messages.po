@@ -1,0 +1,827 @@
+# Romanian translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-06-09 22:52+0300\n"
+"PO-Revision-Date: 2020-06-09 22:53+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ro\n"
+"Language-Team: ro <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100"
+" < 20)) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+
+#: app.py:102
+msgid "Thank you for your message. We will get back to you shortly."
+msgstr "Mulțumim pentru mesaj. Vom reveni curând cu un răspuns."
+
+#: app.py:178 app.py:239 app.py:292 templates/about/aqi_calculator.html:495
+msgid "Please select a sensor from the list."
+msgstr "Selectează un senzor din listă."
+
+#: app.py:289
+msgid "Please select a period shorter or equal to one month."
+msgstr "Selectează o perioadă mai scurtă sau egală cu o lună."
+
+#: app.py:392
+msgid "Edit successful"
+msgstr "Editare cu succes"
+
+#: templates/about/aqi_calculator.html:33
+msgid "For more details, click here"
+msgstr "Pentru mai multe detalii, apasă aici"
+
+#: templates/about/aqi_calculator.html:39
+#: templates/dashboard/aqi_heatmap.html:31
+#: templates/dashboard/predictions.html:41
+#: templates/dashboard/timeseries.html:33
+msgid "Sensor"
+msgstr "Senzor"
+
+#: templates/about/aqi_calculator.html:40
+#: templates/dashboard/predictions.html:40
+#: templates/dashboard/timeseries.html:32
+msgid "Unit"
+msgstr "Unitate"
+
+#: templates/about/aqi_calculator.html:41 templates/about/sensors.html:68
+msgid "Concentration"
+msgstr "Concentrație"
+
+#: templates/about/aqi_calculator.html:50
+msgid "Select"
+msgstr "Selectează"
+
+#: templates/about/aqi_calculator.html:51
+msgid "O3(1h average)"
+msgstr "O3(medie la 1 oră)"
+
+#: templates/about/aqi_calculator.html:52
+msgid "PM2.5(24h average)"
+msgstr "PM2.5(medie la 24 de ore)"
+
+#: templates/about/aqi_calculator.html:53
+msgid "PM10(24h average)"
+msgstr "PM10(medie la 24 de ore)"
+
+#: templates/about/aqi_calculator.html:54
+msgid "NO2(1h average)"
+msgstr "NO2(medie la 24 de ore)"
+
+#: templates/about/aqi_calculator.html:55
+msgid "SO2(1h average)"
+msgstr "SO2(medie la 24 de ore)"
+
+#: templates/about/aqi_calculator.html:56
+msgid "O3(8h average)"
+msgstr "O3(medie la 8 ore)"
+
+#: templates/about/aqi_calculator.html:65
+msgid "Air Quality Index"
+msgstr "Indicele calității aerului"
+
+#: templates/about/aqi_calculator.html:66
+msgid "Air Quality Category"
+msgstr "Categoria calității aerului"
+
+#: templates/about/aqi_calculator.html:83
+msgid "Calculate Air Quality Index"
+msgstr "Calculează indicele calității aerului"
+
+#: templates/about/aqi_calculator.html:212
+msgid "Ozone values must be between 125 and 604. Please enter a valid value."
+msgstr "Valorile ozonului trebuie să se încadreze între 125 și 604. Te rog să introduci o valoare validă."
+
+#: templates/about/aqi_calculator.html:271
+msgid "PM2.5 values must be between 0 and 500.4. Please enter a valid value."
+msgstr "Valorile PM2.5 trebuie să se încadreze între 0 și 500.4. Te rog să introduci o valoare validă."
+
+#: templates/about/aqi_calculator.html:330
+msgid "PM10 values must be between 0 and 604. Please enter a valid value."
+msgstr "Valorile PM10 trebuie să se încadreze între 0 și 604. Te rog să introduci o valoare validă."
+
+#: templates/about/aqi_calculator.html:388
+msgid "NO2 values must be between 0 and 2049. Please enter a valid value."
+msgstr "Valorile NO2 trebuie să se încadreze între 0 și 2049. Te rog să introduci o valoare validă."
+
+#: templates/about/aqi_calculator.html:448
+msgid "SO2 values must be between 0 and 1004. Please enter a valid value."
+msgstr "Valorile SO2 trebuie să se încadreze între 0 și 1004. Te rog să introduci o valoare validă."
+
+#: templates/about/aqi_calculator.html:490
+msgid "Ozone values must be between 106 and 200. Please enter a valid value"
+msgstr "Valorile ozonului trebuie să se încadreze între 106 și 200. Te rog să introduci o valoare validă."
+
+#: templates/about/aqi_calculator.html:516 templates/about/parameters.html:44
+msgid "Good"
+msgstr "Bun"
+
+#: templates/about/aqi_calculator.html:520
+msgid "Moderate"
+msgstr "Moderat"
+
+msgid "MSE is "
+msgstr "Valoarea MSE este "
+
+#: templates/about/aqi_calculator.html:525
+msgid "Unhealthy for  Sensitive Groups"
+msgstr "Nesănătos pentru grupuri sensibile"
+
+#: templates/about/contact.html:7 templates/menu/menu.html:124
+msgid "Contact"
+msgstr "Contact"
+
+#: templates/about/contact.html:50
+msgid "*Send directly an e-mail"
+msgstr "*Trimite direct un e-mail"
+
+#: templates/about/contact.html:59
+msgid "Leave your feedback message below "
+msgstr "Lasă o recenzie mai jos"
+
+#: templates/about/contact.html:64
+msgid "* Your name"
+msgstr "*Nume"
+
+msgid "Please enter valid credentials."
+msgstr "Te rog să introduci informații valide."
+
+msgid "Account created."
+msgstr "Contul a fost creat."
+
+#: templates/about/contact.html:67 templates/account/edit_account.html:57
+#: templates/account/register.html:52
+msgid "Please enter your name."
+msgstr "Te rog să introduci numele tău."
+
+#: templates/about/contact.html:73
+msgid "* Your e-mail"
+msgstr "*Adresă de e-mail"
+
+#: templates/about/contact.html:75 templates/account/edit_account.html:64
+#: templates/account/register.html:58
+msgid "Please enter your e-mail."
+msgstr "Te rog să introduci adresa de e-mail."
+
+#: templates/about/contact.html:81
+msgid "* Your phone number"
+msgstr "*Număr de telefon"
+
+#: templates/about/contact.html:83
+msgid "Please enter your phone number."
+msgstr "Te rog să introduci numărul de telefon."
+
+#: templates/about/contact.html:106
+msgid "*Your Message"
+msgstr "*Mesaj"
+
+#: templates/about/contact.html:108
+msgid "Please enter your feedback message."
+msgstr "Te rog să introduci mesajul tău."
+
+#: templates/about/contact.html:121
+msgid "Brasov, Romania"
+msgstr "Brașov, România"
+
+#: templates/about/help.html:17
+msgid "Purpose"
+msgstr "Scop"
+
+#: templates/about/help.html:18
+msgid ""
+"The purpose of this application is to inform people about the utter "
+"importance of air quality.\n"
+"                Pollution represents a factor which contributes to "
+"decreasing of life quality and to increasing the risk\n"
+"                to develop unwanted diseases,\n"
+"                such as asthma, pulmonary cancer and cardiovascular "
+"problems."
+msgstr "Scopul acestei aplicații este de a informa oamenii despre importanța calității aerului. Poluarea reprezintă un factor care contribuie la diminuarea calității vieții și la creșterea riscului de a dezvolta afecțiuni nedorite, precum astmul, cancer pulmonar și probleme cardiovasculare."
+
+#: templates/about/help.html:25
+msgid "Anomalies"
+msgstr "Anomalii"
+
+#: templates/about/help.html:26
+msgid "This application's main goal is to detect anomalies and their cause.These are observed using certain algorithms, such as Facebook Prophet and Isolation Forest."
+msgstr "Scopul principal al acestei aplicații este de a detecta anomaliile și cauza apariției lor. Acestea sunt observate prin intermediul unor anumiți algoritmi, precum Facebook Prophet și Isolation Forest."
+
+#: templates/about/help.html:31
+msgid "Awareness"
+msgstr "Conștientizare"
+
+#: templates/about/help.html:33
+msgid ""
+"Moreover, the application wants to raise awareness at the variety of "
+"factors\n"
+"                     which contribute to pollution and how their values "
+"vary from one moment to another."
+msgstr "În plus, aplicația dorește să contribuie la sporirea conștientizării existenței mai multor factori care contribuie la poluare și variația valorilor acestora de la un moment la altul."
+
+#: templates/about/parameters.html:7 templates/menu/menu.html:127
+msgid "Parameters"
+msgstr "Parametri"
+
+#: templates/about/parameters.html:33
+msgid "Air Quality Index(AQI)"
+msgstr "Indicele calității aerului(ICA)"
+
+#: templates/about/parameters.html:34
+msgid "Air Pollution Level"
+msgstr "Nivel de poluare"
+
+#: templates/about/parameters.html:35
+msgid "Health Implications"
+msgstr "Influențe asupra sănătății"
+
+#: templates/about/parameters.html:36
+msgid "Recommended Precautions"
+msgstr "Precauții recomandate"
+
+#: templates/about/parameters.html:37
+msgid "Color Symbol"
+msgstr "Culoare simbolică"
+
+#: templates/about/parameters.html:45
+msgid ""
+"Air quality is considered satisfactory, and air pollution poses little or"
+" no risk\t"
+msgstr "Calitatea aerului este considerată satisfăcătoare, iar poluarea aerului prezintă risc minim sau inexistent."
+
+#: templates/about/parameters.html:46
+msgid "None"
+msgstr "Nimic"
+
+#: templates/about/parameters.html:47
+msgid "Green"
+msgstr "Verde"
+
+#: templates/about/parameters.html:51
+msgid "Moderate\t"
+msgstr "Moderat"
+
+#: templates/about/parameters.html:52
+msgid ""
+"Air quality is acceptable; however, for some pollutants there may be a "
+"moderate health concern for a very small number of people who are "
+"unusually sensitive to air pollution."
+msgstr "Calitatea aerului este acceptabilă. Totuși, anumiți poluanți pot crea probleme moderate pentru un număr mic de oameni, sensibili la poluare."
+
+#: templates/about/parameters.html:53 templates/about/parameters.html:62
+msgid ""
+"Active children and adults, and people with respiratory disease, such as "
+"asthma, should limit prolonged outdoor exertion."
+msgstr "Copiii și adulții activi, precum și oamenii cu probleme respiratorii, precum astmul, ar trebui să limiteze expunerea la activități în aer liber."
+
+#: templates/about/parameters.html:54
+msgid "Yellow"
+msgstr "Galben"
+
+#: templates/about/parameters.html:60
+msgid "Unhealthy for Sensitive Groups"
+msgstr "Nesănătos pentru grupuri sensibile"
+
+#: templates/about/parameters.html:61
+msgid ""
+"Members of sensitive groups may experience health effects. The general "
+"public is not likely to be affected."
+msgstr "Membrii grupurilor sensibile ar putea avea parte de efecte asupra sănătății. În mod normal, publicul general nu este afectat."
+
+#: templates/about/parameters.html:63
+msgid "Orange"
+msgstr "Portocaliu"
+
+#: templates/about/parameters.html:69
+msgid "Unhealthy"
+msgstr "Nesănătos"
+
+#: templates/about/parameters.html:70
+msgid ""
+"Everyone may begin to experience health effects; members of sensitive "
+"groups may experience more serious health effects."
+msgstr "Toată lumea ar putea experimenta probleme asupra sănătății; membrii grupurilor sensibile ar putea experimenta probleme mai grave. "
+
+#: templates/about/parameters.html:71
+msgid ""
+"Active children and adults, and people with respiratory disease, such as "
+"asthma, should avoid prolonged outdoor exertion; everyone else, "
+"especially children, should limit prolonged outdoor exertion."
+msgstr "Copiii și adulții activi, precum și oamenii cu probleme respiratorii, precum astmul, ar trebui să evite expunerea în aer liber pe timp îndelungat; toți ceilalți, în mod special copiii, ar trebui să limiteze expunerea în aer liber."
+
+#: templates/about/parameters.html:72
+msgid "Red"
+msgstr "Roșu"
+
+#: templates/about/parameters.html:78
+msgid "Very Unhealthy"
+msgstr "Foarte nesănătos"
+
+#: templates/about/parameters.html:79
+msgid ""
+"Health warnings of emergency conditions. The entire population is more "
+"likely to be affected."
+msgstr "Atenționări de sănătate pentru condiții extreme. Întreaga populație este predispusă să fie afectată."
+
+#: templates/about/parameters.html:80
+msgid ""
+"Active children and adults, and people with respiratory disease, such as "
+"asthma, should avoid all outdoor exertion; everyone else, especially "
+"children, should limit outdoor exertion."
+msgstr "Copiii și adulții activi, precum și persoanele cu probleme respiratorii, precum astmul, ar trebui să evite expunerea în aer liber; toți ceilalți, în special copiii, ar trebui să limiteze expunerea în aer liber."
+
+#: templates/about/parameters.html:81
+msgid "Purple"
+msgstr "Mov"
+
+
+
+#: templates/about/parameters.html:88
+msgid "Health alert: everyone may experience more serious health effects."
+msgstr "Alertă de sănătate: toți oamenii ar putea experimenta efecte serioase asupra sănătății."
+
+#: templates/about/parameters.html:89
+msgid "Everyone should avoid all outdoor exertion."
+msgstr "Toți oamenii ar trebui să evite expunerea în aer liber."
+
+#: templates/about/parameters.html:90
+msgid "Maroon"
+msgstr "Maro"
+
+#: templates/about/sensors.html:51
+msgid "AQI of "
+msgstr "Indicele calității aerului pentru "
+
+#: templates/about/sensors.html:51
+msgid " is "
+msgstr " este "
+
+#: templates/about/sensors.html:67
+msgid "Pollutant"
+msgstr "Poluant"
+
+msgid "Sensors"
+msgstr "Senzori"
+
+msgid "Please select a longer period of time. Facebook Prophet cannot function with such a short period."
+msgstr "Te rog să selectezi o perioadă mai lungă de timp. Facebook Prophet nu poate funcționa cu puține date."
+
+msgid "Dashboard"
+msgstr "Panou de bord"
+
+msgid "AQI Calculator"
+msgstr "Calculator ICA"
+
+
+msgid "Air Pollution"
+msgstr "Poluarea aerului"
+
+
+msgid "aqi"
+msgstr "ica"
+
+
+msgid "aqi category"
+msgstr "categorie ica"
+
+#: templates/about/sensors.html:69
+msgid "Period"
+msgstr "Perioadă"
+
+msgid "Maps"
+msgstr "Hărți"
+
+msgid "About"
+msgstr "Despre"
+#: templates/about/sensors.html:70
+msgid "Health Effects"
+msgstr "Efecte asupra sănătății"
+
+#: templates/about/sensors.html:77
+msgid "8 hour mean"
+msgstr "Medie la 8 ore"
+
+#: templates/about/sensors.html:78
+msgid ""
+"Great levels of ozone can have an impact upon human health, due to the "
+"fact that they cause  lung problems and breathing issues, such as asthma."
+msgstr "Valorile mari ale ozonului pot avea un impact asupra sănătății umane, din cauza faptului că acestea produc probleme pulmonare și respiratorii, precum astmul."
+
+#: templates/about/sensors.html:84 templates/about/sensors.html:98
+#: templates/about/sensors.html:123
+msgid "Annual mean"
+msgstr "Medie anuală"
+
+#: templates/about/sensors.html:85
+msgid ""
+"Particulate matter can lead to cardiovascular disease, chronic pulmonary "
+"disease and lung cancer."
+msgstr "Particulele în suspensie pot provoca afecțiuni cardiovasculare, boli pulmonare cronice și cancer pulmonar."
+
+#: templates/about/sensors.html:91 templates/about/sensors.html:105
+#: templates/about/sensors.html:143
+msgid "24 hour mean"
+msgstr "Medie la 24 de ore"
+
+#: templates/about/sensors.html:99
+msgid ""
+"Can lead to asthma attacks, high blood pressure, heart attack, strokes "
+"and premature death."
+msgstr "Pot provoca afecțiuni astmice, presiune arterială mare, infarct, accident vascular cerebral și decese premature."
+
+#: templates/about/sensors.html:111
+msgid "General"
+msgstr "General"
+
+#: templates/about/sensors.html:112
+msgid ""
+"Can lead to asthma, allergy, irritation of the airways and lung "
+"disfunctionality."
+msgstr "Pot cauza astm, alergie, iritarea căilor aeriene și disfuncționalități pulmonare."
+
+#: templates/about/sensors.html:117
+msgid "Highly urbanized areas"
+msgstr "Zone înalt urbanizate"
+
+#: templates/about/sensors.html:124
+msgid "Long exposure to NO<sub>2</sub> can lead to asthma and pulmonary disease."
+msgstr "Expunerea prelungită la NO<sub>2</sub> poate provoca astm și boli pulmonare."
+
+#: templates/about/sensors.html:130
+msgid "1 hour mean"
+msgstr "Medie la o oră"
+
+#: templates/about/sensors.html:136
+msgid "10 minute mean"
+msgstr "Medie la 10 minute"
+
+#: templates/about/sensors.html:137
+msgid ""
+"It can lead to respiratory issues, eye strain and disfunctionality to the"
+" lungs."
+msgstr "Pot cauza probleme respiratorii, oboseală oculară și disfuncționalități pulmonare. "
+
+#: templates/account/edit_account.html:6 templates/account/edit_account.html:49
+msgid "Edit Account"
+msgstr "Editare cont"
+
+#: templates/account/edit_account.html:72 templates/account/login.html:71
+#: templates/account/register.html:65
+msgid "Please enter your password."
+msgstr "Te rog să introduci parola."
+
+#: templates/account/edit_account.html:79 templates/account/login.html:77
+#: templates/account/register.html:72
+msgid "Show password"
+msgstr "Arată parola"
+
+#: templates/account/edit_account.html:88
+msgid "Cancel"
+msgstr "Renunță"
+
+#: templates/account/login.html:6 templates/account/login.html:51
+#: templates/menu/menu.html:68
+msgid "Login"
+msgstr "Logare"
+
+#: templates/account/login.html:58
+msgid "Username"
+msgstr "Nume de utilizator"
+
+#: templates/account/login.html:61
+msgid "Please enter your username."
+msgstr "Te rog să introduci numele de utilizator."
+
+#: templates/account/login.html:68
+msgid "Password"
+msgstr "Parolă"
+
+#: templates/account/login.html:84
+msgid "Confirm"
+msgstr "Confirmare"
+
+#: templates/account/login.html:86
+msgid "Create an account"
+msgstr "Creează un cont"
+
+#: templates/account/register.html:44
+msgid "Register"
+msgstr "Înregistrare"
+
+#: templates/account/register.html:79
+msgid "I already have an account"
+msgstr "Am deja cont"
+
+#: templates/dashboard/aqi_heatmap.html:32
+#: templates/dashboard/predictions.html:43
+#: templates/dashboard/timeseries.html:34
+msgid "Start Date"
+msgstr "Dată de început"
+
+#: templates/dashboard/aqi_heatmap.html:33
+#: templates/dashboard/predictions.html:44
+#: templates/dashboard/timeseries.html:35
+msgid "End Date"
+msgstr "Dată de final"
+
+#: templates/dashboard/aqi_heatmap.html:50
+#: templates/dashboard/predictions.html:69
+#: templates/dashboard/timeseries.html:47
+msgid "Status"
+msgstr "Status"
+
+#: templates/dashboard/aqi_heatmap.html:72
+msgid "Show Heatmap"
+msgstr "Arată harta termografică"
+
+#: templates/dashboard/predictions.html:42
+msgid "Algorithm"
+msgstr "Algoritm"
+
+#: templates/dashboard/predictions.html:53
+msgid "Please select an algorithm from the list."
+msgstr "Te rog selectează un algoritm din listă."
+
+#: templates/dashboard/predictions.html:57
+msgid "Select an algorithm from the list"
+msgstr "Selectează un algoritm din listă"
+
+#: templates/dashboard/predictions.html:58
+msgid "Linear Regression"
+msgstr "Regresie liniară"
+
+#: templates/dashboard/predictions.html:59
+msgid "Polynomial Regression"
+msgstr "Regresie polinomială"
+
+#: templates/dashboard/predictions.html:60
+msgid "Spline Regression"
+msgstr "Regresie spline"
+
+#: templates/dashboard/predictions.html:61
+msgid "Facebook Prophet"
+msgstr "Facebook Prophet"
+
+#: templates/dashboard/predictions.html:74
+#: templates/dashboard/timeseries.html:64
+msgid " Download selected data"
+msgstr "Descarcă datele selectate"
+
+#: templates/dashboard/predictions.html:99
+msgid "Predict Data"
+msgstr "Calculează predicții"
+
+#: templates/dashboard/timeseries.html:6
+msgid "Timeseries"
+msgstr "Serii de timp"
+
+#: templates/dashboard/timeseries.html:51
+msgid " Show boxplot"
+msgstr "Arată diagrama boxplot"
+
+#: templates/dashboard/timeseries.html:83
+msgid "Visualize Data"
+msgstr "Vizualizare date"
+
+#: templates/dashboard/timeseries.html:230
+msgid "Choose a sensor from the list"
+msgstr "Alege un senzor din listă"
+
+#: templates/menu/menu.html:32
+msgid "Home"
+msgstr "Acasă"
+
+#: templates/menu/menu.html:45
+msgid "Predictions"
+msgstr "Predicții"
+
+#: templates/menu/menu.html:46
+msgid "Time Series"
+msgstr "Serii de timp"
+
+#: templates/menu/menu.html:47
+msgid "AQI Heatmap"
+msgstr "ICA hartă termografică"
+
+#: templates/menu/menu.html:57
+msgid "Account"
+msgstr "Cont"
+
+#: templates/menu/menu.html:63
+msgid "Edit "
+msgstr "Editare"
+
+#: templates/menu/menu.html:64
+msgid "Logout, "
+msgstr "Deloghează-te, "
+
+#: templates/menu/menu.html:67
+msgid "Create account"
+msgstr "Creează un cont"
+
+#: templates/menu/menu.html:99
+msgid "English"
+msgstr "Engleză"
+
+#: templates/menu/menu.html:100
+msgid "Romanian"
+msgstr "Română"
+
+#: templates/menu/menu.html:114
+msgid "Map"
+msgstr "Hartă"
+
+#: templates/menu/menu.html:115
+msgid "Map Version 2"
+msgstr "Hartă versiunea 2"
+
+#: templates/menu/menu.html:125
+msgid "Help"
+msgstr "Ajutor"
+
+#: templates/menu/menu.html:126
+msgid "Sensors"
+msgstr "Senzori"
+
+#: templates/menu/menu.html:128
+msgid "AQI"
+msgstr "ICA"
+
+msgid "Change Theme Color"
+msgstr "Schimbă culoarea temei"
+
+msgid "Language"
+msgstr "Limbă"
+
+msgid "Settings"
+msgstr "Setări"
+
+
+msgid "Send Feedback"
+msgstr "Trimite recenzia"
+
+msgid "Connected to device."
+msgstr "Conectat la dispozitiv."
+
+
+msgid "loading"
+msgstr "se încarcă"
+
+msgid "Units ok"
+msgstr "Unități ok"
+
+msgid "Idle"
+msgstr "Ocupat"
+
+
+msgid "Temperature"
+msgstr "Temperatură"
+
+msgid "Pressure"
+msgstr "Presiune"
+
+
+msgid "Humidity"
+msgstr "Umiditate"
+
+
+msgid "Formaldehyde"
+msgstr "Formaldehidă"
+
+
+msgid "Ozone"
+msgstr "Ozon"
+
+msgid "Carbon Dioxide"
+msgstr "Dioxid de carbon"
+
+
+msgid "Timelocal"
+msgstr "Timp"
+
+
+msgid "Volatile organic compound(VOC)"
+msgstr "Compus organic volatil(COV)"
+
+
+msgid "Noise"
+msgstr "Zgomot"
+
+
+msgid "All"
+msgstr "Toți senzorii"
+
+msgid "row(s)"
+msgstr "înregistrări"
+
+msgid "Linear Regression"
+msgstr "Regresie Liniară"
+
+msgid "Linear Regression for "
+msgstr "Regresie liniară pentru "
+
+msgid "Actual values"
+msgstr "Valori actuale"
+
+msgid "pressure"
+msgstr "presiune"
+
+msgid "temperature"
+msgstr "temperatură"
+
+msgid "humidity"
+msgstr "umiditate"
+
+msgid "voc"
+msgstr "cov"
+
+
+msgid "noise"
+msgstr "zgomot"
+
+msgid "Day"
+msgstr "Dată"
+
+msgid "Residual"
+msgstr "Rezidual"
+
+msgid "Forecast for Five Days"
+msgstr "Predicții pentru următoarele 5 zile"
+
+msgid "Data was downloaded"
+msgstr "Datele au fost descărcate"
+
+msgid "*E-mail"
+msgstr "*Adresă de e-mail"
+
+msgid "Correlation matrix"
+msgstr "Matricea de corelație"
+
+msgid "*Password"
+msgstr "*Parolă"
+
+msgid "Boxplot cannot be created for all sensors."
+msgstr "Graficul de tip boxplot nu poate fi creat pentru toți senzorii."
+
+msgid "Please enter a valid concentration."
+msgstr "Te rog să introduci o concentrație validă."
+
+msgid "Unhealthy"
+msgstr "Nesănătos"
+
+msgid "Very Unhealthy"
+msgstr "Foarte nesănătos"
+
+msgid "Hazardous"
+msgstr "Hazard"
+
+
+msgid "Polynomial regression for "
+msgstr "Regresie polinomială pentru "
+
+msgid "Polynomial Grade %d"
+msgstr "Grad polinomial %d"
+
+msgid "Regression Spline for "
+msgstr "Regresie spline pentru "
+
+msgid "Predicted values grade "
+msgstr "Valori prezise pentru gradul "
+
+
+msgid "Comparison between predicted values and real ones"
+msgstr "Comparație între valorile prezise și cele reale"
+
+msgid "Yhat-predicted value"
+msgstr "Yhat-valori prezise"
+
+msgid "Y-actual value"
+msgstr "Y-valori actuale"
+
+msgid "Yhat_lower-low limit of predictions"
+msgstr "Yhat_lower-limita inferioară a predicțiilor"
+
+msgid "Yhat_upper-high limit of predictions"
+msgstr "Yhat_upper-limita superioară a predicțiilor"
+
+msgid "Residual plot for "
+msgstr "Grafic rezidual pentru "
+
+msgid "Best prediction grade is "
+msgstr "Cel mai bun grad al predicției este "
+
+msgid " for a MSE equal to "
+msgstr " pentru o valoare MSE egală cu "
+
+msgid "Change to Dark Theme"
+msgstr "Schimbă la temă închisă"
+
+msgid "Change to Light Theme"
+msgstr "Schimbă la temă deschisă"

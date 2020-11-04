@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "menu/menu.html" %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ _("Air Pollution") }}{% endblock %}</title>
+    {% block dependencies %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <style>
+        img{
+                height: calc(100vh - 70px);
+                z-index: 1;
+
+        }
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+                <img class="d-block w-100" src="/static/images/pollution.jpg" alt="welcome" />
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "menu/menu.html" %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ _("Forecast for Five Days") }}{% endblock %}</title>
+    {% block dependencies %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+        <style>
+            .loader {
+                border: 16px solid #000000;
+                margin: 0 auto;
+                border-radius: 50%;
+                border-top: 16px solid #08db64;
+                width: 50px;
+                height: 50px;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+
+        </style>
+    {% endblock %}
+</head>
+
+<body>
+
+{% block content %}
+    <br><br><br>
+    <div class="loader" id="loader"
+         style="position:absolute;top:50%;left:0;right:0;bottom:0;margin:0 auto;display: block;"></div>
+
+    <iframe id="ch2o_frame" src="{{ url_for('ch2o_modell') }}" width="1500" height="1000px" frameborder="0"></iframe>
+    <iframe id="co2_frame" src="{{ url_for('co2_model') }}" width="1500" height="1000px" frameborder="0"></iframe>
+    <iframe id="humidity_frame" src="{{ url_for('humidity_model') }}" width="1500" height="1000px"
+            frameborder="0"></iframe>
+    <iframe id="o3_frame" src="{{ url_for('o3_model') }}" width="1500" height="1000px"
+            frameborder="0"></iframe>
+    <iframe id="pm1_frame" src="{{ url_for('pm1_model') }}" width="1500" height="1000px"
+            frameborder="0"></iframe>
+    <iframe id="pm10" src="{{ url_for('pm10_model') }}" width="1500" height="1000px"
+            frameborder="0"></iframe>
+    <iframe id="pm25_frame" src="{{ url_for('pm25_model') }}" width="1500" height="1000px"
+            frameborder="0"></iframe>
+    <iframe id="pressure_frame" src="{{ url_for('pressure_model') }}" width="1500" height="1000px"
+            frameborder="0"></iframe>
+    <iframe id="temperature_frame" src="{{ url_for('temperature_model') }}" width="1500" height="1000px"
+            frameborder="0"></iframe>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#ch2o_frame').on('load', function () {
+                $('#loader').hide();
+            });
+
+
+        });
+    </script>
+{% endblock %}
+</body>
+
+</html>

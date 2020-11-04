@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "menu/menu.html" %}
+<head>
+
+    <title>{% block title %}{{ _("Map") }}{% endblock %}</title>
+
+    <meta charset="utf-8"/>
+    {% block dependencies %}
+        <style>
+            html {
+                height: 100%;
+            }
+
+            body {
+                height: 100%;
+                margin: 0;
+
+            }
+
+            .map {
+                height: 400px;
+                width: 470px;
+                display: inline-block;
+                margin-left: 15px;
+                margin-top: 30px;
+                z-index: 1;
+            }
+
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <link href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" rel="stylesheet"/>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <div id="maps" align="center"></div>
+    <script>
+
+        $(document).ready(function () {
+            var layerTypes = ['aqi', 'pm25', 'pm10', 'o3', 'no2', 'so2']
+            var maps = []
+            layerTypes.forEach(function (layer) {
+                var t = document.createElement('div');
+                t.setAttribute("id", "map_" + layer);
+                t.setAttribute("class", "map");
+                document.getElementById("maps").appendChild(t);
+                var m = L.tileLayer('https://tiles.aqicn.org/tiles/usepa-' + layer + '/{z}/{x}/{y}.png?token=7fc88131092887d986fef664ed800826c99c7434');
+                var map = L.map('map_' + layer, {
+                    center: [45.657974, 25.601198],
+                    zoom: 11,
+                    layers: [m]
+                });
+
+                map.on("zoomend", function (e) {
+                    var zoom = map.getZoom();
+                    var center = map.getCenter();
+                    maps.forEach(function (everyMap) {
+                        everyMap.setView(center, zoom);
+                    })
+                });
+                map.on("moveend", function (e) {
+                    var zoom = map.getZoom();
+                    var center = map.getCenter();
+                    maps.forEach(function (everyMap) {
+                        everyMap.setView(center, zoom);
+                    })
+                });
+
+                var baseLayers = {};
+                baseLayers[layer] = m,
+                    document.getElementById("map_" + layer).style.resize = "both";
+                var WAQI_ATTR = '&copy;  <a  href="http://waqi.info">waqi.info</a>';
+
+                var credits_url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                var credits_attrib = '&copy;  <a  href="http://openstreetmap.org/copyright">OpenStreetMap</a>';
+                var osmLayer = L.tileLayer(credits_url, {attribution: [credits_attrib, WAQI_ATTR]});
+                map.addLayer(osmLayer);
+                L.control.layers(baseLayers, null, {collapsed: false}).addTo(map);
+                maps.push(map)
+            });
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

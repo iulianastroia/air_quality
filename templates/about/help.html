@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "menu/menu.html" %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ _("Help") }}{% endblock %}</title>
+
+</head>
+
+<body>
+{% block content %}
+    <div class="container contact-form">
+        <br>
+        <div class="contact-image">
+            <img src="https://i.ibb.co/SNJpnHY/air-pollution-icon-png.png" alt="air_pollution_icon"/>
+            <br><br>
+            <h3>{{ _("Purpose") }}</h3>
+            <h5><span style="color:#949494"> {{ _("The purpose of this application is to inform people about the utter importance of air quality.
+                Pollution represents a factor which contributes to decreasing of life quality and to increasing the risk
+                to develop unwanted diseases,
+                such as asthma, pulmonary cancer and cardiovascular problems.") }}</span>
+            </h5>
+            <br><br>
+
+            <h3>{{ _("Anomalies") }} </h3>
+            <h5><span style="color:#949494">  {{ _("This application's main goal is to detect anomalies and their cause.These are observed using certain algorithms, such as Facebook Prophet and Isolation Forest.") }}</span>
+            </h5>
+            <br><br>
+
+            <h3>{{ _("Awareness") }} </h3>
+            <h5><span
+                    style="color:#949494"> {{ _("Moreover, the application wants to raise awareness at the variety of factors
+                     which contribute to pollution and how their values vary from one moment to another.") }}
+            </span></h5>
+        </div>
+    </div>
+
+
+{% endblock %}
+</body>
+</html>

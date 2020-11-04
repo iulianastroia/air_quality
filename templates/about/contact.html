@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "menu/menu.html" %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ _("Contact") }}{% endblock %}</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    {% block dependencies %}
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+        <style>
+
+            .topcenter {
+            {#background-color: #0074D9;#} padding: 10px;
+                text-align: center;
+                top: 0;
+                position: absolute;
+                left: 42%;
+            }
+
+            table td {
+            {#border: solid 1px #fab;#}{#    word-wrap: break-word;#} word-wrap: break-spaces;
+            {#width: 400px#}{#height: 400px#}
+            }
+
+            #name, #email, #phone, #message {
+                border-radius: 15px 50px 30px;
+                border: 2px solid #5e697b;
+            {#padding: 20px;#}{#width: 200px;#}{#height: 15px;#}
+            }
+
+        </style>
+    {% endblock %}
+
+
+</head>
+
+<body>
+
+{% block content %}
+
+    <div class="topcenter">
+
+        <a href="mailto:iuliana.stroia97@gmail.com">{{ _("*Send directly an e-mail") }}</a></div>
+
+    <div class="container contact-form">
+        <br>
+        <div class="contact-image">
+            <img src="https://i.ibb.co/SNJpnHY/air-pollution-icon-png.png" alt="air_pollution_icon"/>
+        </div>
+        <br>
+        <form method="post" id="contactForm" name="contactForm">
+            <h3><i class="far fa-comment-dots"></i> {{ _('Leave your feedback message below ') }} </h3>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="{{ _("* Your name") }}"
+                               id="name"
+                               required
+                               oninvalid="this.setCustomValidity('{{ _("Please enter your name.") }}')"
+                               oninput="this.setCustomValidity('')"
+                               value="" onsubmit="clearInput()"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" id="email"
+                               placeholder="{{ _("* Your e-mail") }}"
+                               required
+                               oninvalid="this.setCustomValidity('{{ _("Please enter your e-mail.") }}')"
+                               oninput="this.setCustomValidity('')"
+                               value="{{ email }}"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="phone" class="form-control" id="phone"
+                               placeholder="{{ _("* Your phone number") }}"
+                               required
+                               oninvalid="this.setCustomValidity('{{ _("Please enter your phone number.") }}')"
+                               oninput="this.setCustomValidity('')"
+                               value=""/>
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="submit" id="send_message" name="send_message" class="btn btn-outline-secondary"
+                               value="{{ _("Send Feedback") }}"/>
+                    </div>
+
+
+                    <div class="form-group">
+                        {% for message in get_flashed_messages() %}
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <textarea name="message" class="form-control"
+
+                                  placeholder="{{ _('*Your Message') }}" id="message"
+                                  required
+                                  oninvalid="this.setCustomValidity('{{ _("Please enter your feedback message.") }}')"
+                                  oninput="this.setCustomValidity('')"
+
+
+                                  style="width: 100%; height: 150px;"></textarea>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <table>
+                <td><i class="fas fa-user-shield fa-2x"></i>Stroia Iuliana</td>
+                <td><i class="fas fa-map-marker-alt fa-2x"></i>{{ _('Brasov, Romania') }}</td>
+                <td><i class="fas fa-at fa-2x"></i>iuliana-andreea.stroia-vlad@student.unitbv.ro</td>
+            </table>
+        </form>
+    </div>
+    <script>
+
+        function resetForm() {
+            document.getElementById("contactForm").reset();
+        }
+
+
+    </script>
+
+{% endblock %}
+</body>
+</html>

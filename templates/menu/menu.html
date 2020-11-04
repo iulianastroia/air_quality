@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    {#css#}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    {#    <meta charset="UTF-8">#}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    {% block dependencies %}
+
+    {% endblock %}
+    <link rel="stylesheet" href="/static/styles/menu_template.css">
+
+</head>
+<body>
+
+
+{#this is MENU#}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+
+            <li class="nav-item active">
+                {#                {% if username %}#}
+
+                <a class="nav-link" href="/welcome">{{ _("Home") }} <span class="sr-only">(current)</span></a>
+                {#                {% endif %}#}
+            </li>
+
+
+            <li class="nav-item dropdown">
+                {#                {% if username %}#}
+
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ _("Dashboard") }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/predictions">{{ _("Predictions") }}</a>
+                    <a class="dropdown-item" href="/timeseries">{{ _("Time Series") }}</a>
+                    <a class="dropdown-item" href="/aqi_heatmap">{{ _("AQI Heatmap") }}</a>
+                    <a class="dropdown-item" href="/future_forecast">{{ _("Forecast for Five Days") }}</a>
+                </div>
+                {#                {% endif %}#}
+            </li>
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ _("Account") }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                    {% if session.get("username") %}
+                        <a class="dropdown-item"
+                           href="/edit_account">{{ _("Edit ") }}</a>
+                        <a class="dropdown-item" href="/logout">{{ _("Logout, ") }} {{ session.get("username") }}</a>
+
+                    {% else %}
+                        <a class="dropdown-item" href="/register">{{ _("Create account") }}</a>
+                        <a class="dropdown-item" href="/login">{{ _("Login") }}</a>
+                    {% endif %}
+
+
+                </div>
+            </li>
+
+
+        </ul>
+
+
+    </div>
+
+
+    <ul class="navbar-nav" style="list-style: none">
+
+        <li class="nav-item dropdown">
+
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ _("Settings") }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#" onclick=changeThemeText(),toggleTheme()
+                   id="lang">{{ _("Change Theme Color") }}</a>
+                <a class="dropdown-item" href="#" id="navbarDropdownMenuLink" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ _("Language") }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/language/en">{{ _("English") }}</a>
+                    <a class="dropdown-item" href="/language/ro">{{ _("Romanian") }}</a>
+                </div>
+            </div>
+        </li>
+        {#        {% endif %}#}
+
+        <li class="nav-item dropdown">
+            {#            {% if username %}#}
+
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ _("Maps") }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/map_v1">{{ _("Map") }}</a>
+                <a class="dropdown-item" href="/map_v2">{{ _("Map Version 2") }}</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ _("About") }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/contact">{{ _("Contact") }}</a>
+                <a class="dropdown-item" href="/help">{{ _("Help") }}</a>
+                <a class="dropdown-item" href="/sensors">{{ _("Sensors") }}</a>
+                <a class="dropdown-item" href="/parameters">{{ _("Parameters") }}</a>
+                <a class="dropdown-item" href="/aqi">{{ _("AQI") }}</a>
+
+            </div>
+            {#            {% endif %}#}
+        </li>
+    </ul>
+
+
+</nav>
+
+
+{#END OF MENU#}
+{% block content %}{% endblock %}
+<div style="font-family: bahnschrift">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+</div>
+
+
+<script>
+
+    function changeThemeText() {
+        if (localStorage.getItem('theme') === 'theme-dark') {
+            document.getElementById("lang").text = "{{ _("Change to Dark Theme") }}";
+        } else {
+            document.getElementById("lang").text = "{{ _("Change to Light Theme") }}";
+        }
+    }
+
+
+    // function to set a given theme/color-scheme
+    function setTheme(themeName) {
+        localStorage.setItem('theme', themeName);
+        document.documentElement.className = themeName;
+    }
+
+    // function to toggle between light and dark theme
+    function toggleTheme() {
+        if (localStorage.getItem('theme') === 'theme-dark') {
+            setTheme('theme-light');
+        } else {
+            setTheme('theme-dark');
+        }
+    }
+
+    // Immediately invoked function to set the theme on initial load
+    (function () {
+        if (localStorage.getItem('theme') === 'theme-dark') {
+            setTheme('theme-dark');
+        } else {
+            setTheme('theme-light');
+        }
+    })();
+</script>
+{#{{ username if username }}#}
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "menu/menu.html" %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ _("Sensors") }}{% endblock %}</title>
+    {% block dependencies %}
+
+        {#script for sensor#}
+        <script type="text/javascript" charset="utf-8">
+            (function (w, d, t, f) {
+                w[f] = w[f] || function (c, k, n) {
+                    s = w[f], k = s['k'] = (s['k'] || (k ? ('&k=' + k) : ''));
+                    s['c'] =
+                        c = (c instanceof Array) ? c : [c];
+                    s['n'] = n = n || 0;
+                    L = d.createElement(t), e = d.getElementsByTagName(t)[0];
+                    L.async = 1;
+                    L.src = '//feed.aqicn.org/feed/' + (c[n].city) + '/' + (c[n].lang || '') + '/feed.v1.js?n=' + n + k;
+                    e.parentNode.insertBefore(L, e);
+                };
+            })(window, document, 'script', '_aqiFeed');
+        </script>
+
+        <style>
+            .topcenter {
+            {#background-color: #0074D9;#} padding: 10px;
+                text-align: center;
+                top: 0;
+                position: absolute;
+                left: 42%;
+                color: wheat
+            }
+
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <div class="container contact-form">
+        <div class="contact-image">
+            <img src="https://i.ibb.co/SNJpnHY/air-pollution-icon-png.png" alt="air_pollution_icon"/>
+
+            <div class="topcenter ">
+
+
+                <span id="city-aqi-container"></span>
+                <script type="text/javascript" charset="utf-8">
+                    _aqiFeed({
+                        display: "{{_("AQI of ")}}%cityname {{ _(" is ") }}%aqi",
+                        {#display: "%cityname  AQI  is  %aqi<br><small>on  %date  %impact  %details</small>",#}
+                        container: "city-aqi-container", city: "Brasov"
+                    });
+                </script>
+
+
+            </div>
+
+
+        </div>
+
+
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">{{ _("Pollutant") }}</th>
+                <th scope="col">{{ _("Concentration") }}</th>
+                <th scope="col">{{ _("Period") }}</th>
+                <th scope="col">{{ _("Health Effects") }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>O<sub>3</sub></td>
+                <td>100 μg/m³</td>
+                <td>{{ _("8 hour mean") }}</td>
+                <td>{{ _("Great levels of ozone can have an impact upon human health, due to the fact that they cause  lung problems and breathing issues, such as asthma.") }} </td>
+
+            </tr>
+            <tr>
+                <td>PM<sub>2.5</sub></td>
+                <td>10 μg/m³</td>
+                <td>{{ _("Annual mean") }}</td>
+                <td>{{ _("Particulate matter can lead to cardiovascular disease, chronic pulmonary disease and lung cancer.") }}</td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>25 μg/m³</td>
+                <td>{{ _("24 hour mean") }}</td>
+
+
+            </tr>
+            <tr>
+                <td>PM<sub>10</sub></td>
+                <td>20 μg/m³</td>
+                <td>{{ _("Annual mean") }}</td>
+                <td>{{ _("Can lead to asthma attacks, high blood pressure, heart attack, strokes and premature death.") }}</td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>50 μg/m³</td>
+                <td>{{ _("24 hour mean") }}</td>
+
+            </tr>
+            <tr>
+                <td>CH<sub>2</sub>O</td>
+                <td>10 μg/m³</td>
+                <td>{{ _("General") }}</td>
+                <td>{{ _("Can lead to asthma, allergy, irritation of the airways and lung disfunctionality.") }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>20 μg/m³</td>
+                <td>{{ _("Highly urbanized areas") }}</td>
+
+            </tr>
+            <tr>
+                <td>NO<sub>2</sub></td>
+                <td>40 μg/m³</td>
+                <td>{{ _("Annual mean") }}</td>
+                <td>{{ _("Long exposure to NO<sub>2</sub> can lead to asthma and pulmonary disease.") }}</td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>200 μg/m³</td>
+                <td>{{ _("1 hour mean") }}</td>
+
+            </tr>
+            <tr>
+                <td>SO<sub>2</sub></td>
+                <td>500 μg/m³</td>
+                <td>{{ _("10 minute mean") }}</td>
+                <td>{{ _("It can lead to respiratory issues, eye strain and disfunctionality to the lungs.") }}</td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>20 μg/m³</td>
+                <td>{{ _("24 hour mean") }}</td>
+
+            </tr>
+
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+{% endblock %}
+
+</body>
+</html>

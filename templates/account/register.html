@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% extends "menu/menu.html" %}
+    <title>{% block title %}Register{% endblock %}</title>
+    {% block dependencies %}
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+        {#        todo used for checkbox#}
+        <link rel="stylesheet" href="static/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+
+        <link rel="stylesheet" href="static/css/account_style.css">
+        <style>
+
+
+            img {
+                border-radius: 15px 50px 30px;
+                height: 100%;
+            }
+
+            .container_menu {
+                height: 100px;
+                width: 100%;
+                margin: auto;
+                position: fixed;
+                background-color: transparent;
+                display: flow;
+                background: var(--color-secondary);
+                color: var(--font-color);
+            }
+
+
+            #email, #username, #password {
+                border-radius: 15px 50px 30px;
+                border: 2px solid #5e697b;
+            }
+
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <br><br>
+
+    <div class="container_menu">
+        <br><br>
+        <div class="menu">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h3 style="text-align: center"> {{ _('Register') }} </h3>
+                    <br>
+                    <div>
+                        <form method="POST" id="register-form">
+                            <div class="form-group">
+                                <input type="text" name="username" id="username" placeholder="{{ _("Username") }}"
+                                       autocomplete="off"
+                                       required
+                                       oninvalid="this.setCustomValidity('{{ _("Please enter your name.") }}')"
+                                       oninput="this.setCustomValidity('')"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" id="email" placeholder="{{ _("E-mail") }}" autocomplete="off"
+                                       required
+                                       oninvalid="this.setCustomValidity('{{ _("Please enter your e-mail.") }}')"
+                                       oninput="this.setCustomValidity('')"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" id="password" placeholder="{{ _("Password") }}"
+                                       autocomplete="off"
+                                       required
+                                       oninvalid="this.setCustomValidity('{{ _("Please enter your password.") }}')"
+                                       oninput="this.setCustomValidity('')"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="checkbox" name="showpass" id="showpass" onclick="show_password()"/>
+                                <label for="showpass"
+                                       class="label-agree-term"><span><span></span></span>{{ _("Show password") }}
+                                </label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="btn btn-outline-secondary"
+                                       value="Confirm"/>
+                            </div>
+                            <b> <span id="message" style="color: #5e697b "> {{ message }} </span></b>
+
+                            <a href="/login" class="signup-image-link">{{ _("I already have an account") }}</a>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="signup-image">
+                    <figure><img src="static/images/signup-image.png" alt="sing up image"></figure>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function show_password() {
+            var pass = document.getElementById("password");
+            if (pass.type === "password") {
+                pass.type = "text";
+            } else {
+                pass.type = "password";
+            }
+        }
+
+
+    </script>
+{% endblock %}
+</body>
+</html>
